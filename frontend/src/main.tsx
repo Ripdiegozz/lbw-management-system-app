@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { OpenAPI } from './core';
 import { Toaster } from './components/ui/toaster';
+import { ModalProvider } from './components/providers/modal-provider';
 import './index.css';
 
 // Create a new router instance
@@ -44,6 +45,7 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <InnerApp />
+        <ModalProvider />
         <Toaster />
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

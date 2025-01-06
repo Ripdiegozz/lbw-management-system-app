@@ -2,54 +2,45 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { ApiError, BookCreate, BooksService } from '@/core';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { handleError } from '@/core/utils';
 import { bookSchema } from '@/core/schemas/book';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
+import { PlusCircle } from 'lucide-react';
+import { useModal } from '@/hooks/use-modal';
+import { AuthorService } from '@/core/services/author-service';
+import { PublisherService } from '@/core/services/publisher-service';
+import { CollectionService } from '@/core/services/collection-service';
 
-const genres = [
-  'Ficción',
-  'No ficción',
-  'Terror',
-  'Fantasía',
-  'Ciencia Ficción',
-  'Romance',
-  'Histórico',
-  'Biografía',
-  'Autobiografía',
-  'Ensayo',
-  'Poesía',
-  'Teatro',
-  'Cuento',
-  'Novela',
-  'Novela gráfica',
-  'Manga',
-  'Cómic',
-  'Infantil',
-  'Juvenil',
-  'Adulto',
-  'Clásico',
-  'Contemporáneo',
-  'Suspenso',
-  'Policial',
-  'Aventura',
-  'Humor',
-  'Drama',
-  'Misterio',
-  'Thriller',
-  'Erótico',
-  'Otro'
-];
+function getAuthorsQueryOptions() {
+  return {
+    queryFn: () => AuthorService.readAuthors(),
+    queryKey: ['authors']
+  };
+}
+function getPublishersQueryOptions() {
+  return {
+    queryFn: () => PublisherService.readPublishers(),
+    queryKey: ['publishers']
+  };
+}
+function getCollectionsQueryOptions() {
+  return {
+    queryFn: () => CollectionService.readCollections(),
+    queryKey: ['collections']
+  };
+}
 
 export function AddBookForm() {
+  const { toast } = useToast();
+  const { onOpen } = useModal();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<BookCreate>({
     resolver: zodResolver(bookSchema),
@@ -57,7 +48,7 @@ export function AddBookForm() {
     criteriaMode: 'all',
     defaultValues: {
       titulo: '',
-      autor: '',
+      author: '',
       ejemplares: 1,
       fecha_de_publicacion: new Date().getFullYear().toString(),
       publisher: '',
@@ -65,7 +56,6 @@ export function AddBookForm() {
       locale: 'es'
     }
   });
-
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const year = parseInt(e.target.value);
 
@@ -81,6 +71,19 @@ export function AddBookForm() {
       form.setValue('fecha_de_publicacion', year.toString());
     }
   };
+
+  const { data: authors, isFetching: isFetchingAuthors } = useQuery({
+    ...getAuthorsQueryOptions(),
+    placeholderData: prevData => prevData
+  });
+  const { data: collections, isFetching: isFetchingCollections } = useQuery({
+    ...getCollectionsQueryOptions(),
+    placeholderData: prevData => prevData
+  });
+  const { data: publishers, isFetching: isFetchingPublishers } = useQuery({
+    ...getPublishersQueryOptions(),
+    placeholderData: prevData => prevData
+  });
 
   const mutation = useMutation({
     mutationFn: (data: BookCreate) => BooksService.createBook({ requestBody: data }),
@@ -130,7 +133,7 @@ export function AddBookForm() {
         />
         <FormField
           control={form.control}
-          name="autor"
+          name="author"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -143,11 +146,27 @@ export function AddBookForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {genres.map(genre => (
-                    <SelectItem key={genre} value={genre}>
-                      {genre}
+                  <Button
+                    className="w-full"
+                    variant="ghost"
+                    onClick={() => {
+                      onOpen('create-author');
+                    }}
+                  >
+                    <PlusCircle size={16} />
+                    <span className="ml-2">Añadir autor</span>
+                  </Button>
+                  {isFetchingAuthors ? (
+                    <SelectItem value="loading" className="font-bold text-center">
+                      Cargando autores...
                     </SelectItem>
-                  ))}
+                  ) : (
+                    authors?.data.map(author => (
+                      <SelectItem key={author.documentId} value={author.id.toString()}>
+                        {author.nombre}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -169,11 +188,27 @@ export function AddBookForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {genres.map(genre => (
-                    <SelectItem key={genre} value={genre}>
-                      {genre}
+                  <Button
+                    className="w-full"
+                    variant="ghost"
+                    onClick={() => {
+                      onOpen('create-collection');
+                    }}
+                  >
+                    <PlusCircle size={16} />
+                    <span className="ml-2">Añadir colección</span>
+                  </Button>
+                  {isFetchingCollections ? (
+                    <SelectItem value="loading" className="font-bold text-center">
+                      Cargando colecciones...
                     </SelectItem>
-                  ))}
+                  ) : (
+                    collections?.data.map(collection => (
+                      <SelectItem key={collection.documentId} value={collection.id.toString()}>
+                        {collection.nombre}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -225,11 +260,27 @@ export function AddBookForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {genres.map(genre => (
-                    <SelectItem key={genre} value={genre}>
-                      {genre}
+                  <Button
+                    className="w-full"
+                    variant="ghost"
+                    onClick={() => {
+                      onOpen('create-publisher');
+                    }}
+                  >
+                    <PlusCircle size={16} />
+                    <span className="ml-2">Añadir editorial</span>
+                  </Button>
+                  {isFetchingPublishers ? (
+                    <SelectItem value="loading" className="font-bold text-center">
+                      Cargando editoriales...
                     </SelectItem>
-                  ))}
+                  ) : (
+                    publishers?.data.map(publisher => (
+                      <SelectItem key={publisher.documentId} value={publisher.id.toString()}>
+                        {publisher.nombre}
+                      </SelectItem>
+                    ))
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />

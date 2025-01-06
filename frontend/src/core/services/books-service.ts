@@ -52,6 +52,9 @@ export class BooksService {
    */
   public static createBook(data: TDataCreateBook): CancelablePromise<BookPublic> {
     const { requestBody } = data;
+    // Parse date in yyyy-mm-dd format
+    requestBody.fecha_de_publicacion = new Date(requestBody.fecha_de_publicacion).toISOString().split('T')[0];
+
     return __request(OpenAPI, {
       method: 'POST',
       url: '/api/books/',

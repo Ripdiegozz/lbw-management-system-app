@@ -16,7 +16,7 @@ export type HTTPValidationError = {
 
 export type BookCreate = {
   titulo: string;
-  autor: string;
+  author: string;
   fecha_de_publicacion: string;
   ejemplares: number;
   publisher: string;
@@ -37,7 +37,7 @@ export type BookPublic = {
 
 export type BookUpdate = {
   titulo?: string;
-  autor?: string;
+  author?: string;
   fecha_de_publicacion?: string;
   ejemplares?: number;
   publisher?: string;
@@ -53,7 +53,7 @@ export type BooksPublic = {
 // Authors
 
 export type AuthorCreate = {
-  name: string;
+  nombre: string;
   locale: string;
 };
 
@@ -67,7 +67,7 @@ export type AuthorPublic = {
 };
 
 export type AuthorUpdate = {
-  name: string;
+  nombre: string;
 };
 
 export type AuthorsPublic = {
@@ -78,7 +78,7 @@ export type AuthorsPublic = {
 // Publishers
 
 export type PublisherCreate = {
-  name: string;
+  nombre: string;
   locale: string;
 };
 
@@ -92,11 +92,35 @@ export type PublisherPublic = {
 };
 
 export type PublisherUpdate = {
-  name?: string;
+  nombre?: string;
 };
 
 export type PublishersPublic = {
   data: Array<PublisherPublic>;
+  count: number;
+};
+
+// Collections
+export type CollectionCreate = {
+  nombre: string;
+  locale: string;
+};
+
+export type CollectionPublic = {
+  id: number;
+  documentId: string;
+  nombre: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+export type CollectionUpdate = {
+  nombre?: string;
+};
+
+export type CollectionsPublic = {
+  data: Array<CollectionPublic>;
   count: number;
 };
 

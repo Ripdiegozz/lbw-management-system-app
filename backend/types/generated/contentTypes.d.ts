@@ -407,7 +407,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    autor: Schema.Attribute.Relation<'oneToOne', 'api::autor.autor'>;
+    author: Schema.Attribute.Relation<'oneToOne', 'api::autor.autor'>;
     collection: Schema.Attribute.Relation<
       'oneToOne',
       'api::collection.collection'

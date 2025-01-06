@@ -21,10 +21,10 @@ export const Route = createFileRoute('/_layout/books/')({
 
 const PER_PAGE = 10;
 
-function getItemsQueryOptions({ page }: { page: number }) {
+function getBooksQueryOptions({ page }: { page: number }) {
   return {
     queryFn: () => BooksService.readBooks({ skip: (page - 1) * PER_PAGE, limit: PER_PAGE }),
-    queryKey: ['items', { page }]
+    queryKey: ['books', { page }]
   };
 }
 
@@ -39,7 +39,7 @@ function BooksComponent() {
     isPending,
     isPlaceholderData
   } = useQuery({
-    ...getItemsQueryOptions({ page }),
+    ...getBooksQueryOptions({ page }),
     placeholderData: prevData => prevData
   });
 
@@ -48,7 +48,7 @@ function BooksComponent() {
 
   useEffect(() => {
     if (hasNextPage) {
-      queryClient.prefetchQuery(getItemsQueryOptions({ page: page + 1 }));
+      queryClient.prefetchQuery(getBooksQueryOptions({ page: page + 1 }));
     }
   }, [page, queryClient, hasNextPage]);
 
