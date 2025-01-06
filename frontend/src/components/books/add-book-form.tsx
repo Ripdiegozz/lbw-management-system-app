@@ -2,10 +2,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { ApiError, BookCreate, BooksService } from '@/core';
-import { genres } from '@/core/constants/genres';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '../ui/select';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
@@ -13,6 +11,40 @@ import { handleError } from '@/core/utils';
 import { bookSchema } from '@/core/schemas/book';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from '@tanstack/react-router';
+
+const genres = [
+  'Ficción',
+  'No ficción',
+  'Terror',
+  'Fantasía',
+  'Ciencia Ficción',
+  'Romance',
+  'Histórico',
+  'Biografía',
+  'Autobiografía',
+  'Ensayo',
+  'Poesía',
+  'Teatro',
+  'Cuento',
+  'Novela',
+  'Novela gráfica',
+  'Manga',
+  'Cómic',
+  'Infantil',
+  'Juvenil',
+  'Adulto',
+  'Clásico',
+  'Contemporáneo',
+  'Suspenso',
+  'Policial',
+  'Aventura',
+  'Humor',
+  'Drama',
+  'Misterio',
+  'Thriller',
+  'Erótico',
+  'Otro'
+];
 
 export function AddBookForm() {
   const queryClient = useQueryClient();
@@ -24,14 +56,13 @@ export function AddBookForm() {
     mode: 'onBlur',
     criteriaMode: 'all',
     defaultValues: {
-      title: '',
-      author: '',
-      genre: '',
-      isbn: '',
-      quantity: 1,
-      publication_year: new Date().getFullYear(),
+      titulo: '',
+      autor: '',
+      ejemplares: 1,
+      fecha_de_publicacion: new Date().getFullYear().toString(),
       publisher: '',
-      status: true
+      collection: '',
+      locale: 'es'
     }
   });
 
@@ -39,15 +70,15 @@ export function AddBookForm() {
     const year = parseInt(e.target.value);
 
     if (isNaN(year) || year > new Date().getFullYear()) {
-      form.setValue('publication_year', new Date().getFullYear());
+      form.setValue('fecha_de_publicacion', new Date().getFullYear().toString());
     }
 
     if (e.target.value === '') {
-      form.setValue('publication_year', 0);
+      form.setValue('fecha_de_publicacion', '0');
     }
 
     if (year <= new Date().getFullYear()) {
-      form.setValue('publication_year', year);
+      form.setValue('fecha_de_publicacion', year.toString());
     }
   };
 
@@ -67,6 +98,7 @@ export function AddBookForm() {
     },
     onError: (err: ApiError) => {
       handleError(err, toast);
+      setIsLoading(false);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
@@ -80,10 +112,10 @@ export function AddBookForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 gap-4 max-w-lg rounded-md p-6 bg-white mx-auto shadow-md">
         <FormField
           control={form.control}
-          name="title"
+          name="titulo"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -98,26 +130,11 @@ export function AddBookForm() {
         />
         <FormField
           control={form.control}
-          name="author"
+          name="autor"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
                 Autor <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input placeholder="Ingresa el nombre del autor del libro" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="genre"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Género <span className="text-red-500">*</span>
               </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -139,26 +156,37 @@ export function AddBookForm() {
         />
         <FormField
           control={form.control}
-          name="isbn"
+          name="collection"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                ISBN <span className="text-red-500">*</span>
+                Colección <span className="text-red-500">*</span>
               </FormLabel>
-              <FormControl>
-                <Input placeholder="Enter ISBN" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona un género" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {genres.map(genre => (
+                    <SelectItem key={genre} value={genre}>
+                      {genre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="quantity"
+          name="ejemplares"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Cantidad <span className="text-red-500">*</span>
+                Ejemplares <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input type="number" {...field} onChange={e => field.onChange(parseInt(e.target.value))} />
@@ -169,7 +197,7 @@ export function AddBookForm() {
         />
         <FormField
           control={form.control}
-          name="publication_year"
+          name="fecha_de_publicacion"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -190,25 +218,21 @@ export function AddBookForm() {
               <FormLabel>
                 Editorial <span className="text-red-500">*</span>
               </FormLabel>
-              <FormControl>
-                <Input placeholder="Enter publisher name" {...field} />
-              </FormControl>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona un género" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {genres.map(genre => (
+                    <SelectItem key={genre} value={genre}>
+                      {genre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>Estado</FormLabel>
-                <FormDescription>Este libro se marcará como activo y disponible.</FormDescription>
-              </div>
             </FormItem>
           )}
         />

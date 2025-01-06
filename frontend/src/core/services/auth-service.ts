@@ -1,19 +1,16 @@
 import { CancelablePromise } from '../models/CancelablePromise';
 import { OpenAPI } from '../models/OpenAPI';
 import { request as __request } from '../models/request';
-import type { Body_login_login_access_token, Message, NewPassword, Token, UserPublic } from '../models';
+import type { LoginRequestBody, Message, NewPassword, LoginResponseBody } from '../models';
 
 export type TDataLoginAccessToken = {
-  formData: Body_login_login_access_token;
+  requestBody: LoginRequestBody;
 };
 export type TDataRecoverPassword = {
   email: string;
 };
 export type TDataResetPassword = {
   requestBody: NewPassword;
-};
-export type TDataRecoverPasswordHtmlContent = {
-  email: string;
 };
 
 export class LoginService {
@@ -23,29 +20,16 @@ export class LoginService {
    * @returns Token Successful Response
    * @throws ApiError
    */
-  public static loginAccessToken(data: TDataLoginAccessToken): CancelablePromise<Token> {
-    const { formData } = data;
+  public static loginAccessToken(data: TDataLoginAccessToken): CancelablePromise<LoginResponseBody> {
+    const { requestBody } = data;
+
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/login/access-token',
-      formData: formData,
-      mediaType: 'application/x-www-form-urlencoded',
+      url: '/api/auth/local',
+      body: requestBody,
       errors: {
         422: `Validation Error`
       }
-    });
-  }
-
-  /**
-   * Test Token
-   * Test access token
-   * @returns UserPublic Successful Response
-   * @throws ApiError
-   */
-  public static testToken(): CancelablePromise<UserPublic> {
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/login/test-token'
     });
   }
 
@@ -59,8 +43,8 @@ export class LoginService {
     const { email } = data;
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/password-recovery/{email}',
-      path: {
+      url: '/api/auth/forgot-password',
+      body: {
         email
       },
       errors: {
@@ -79,29 +63,9 @@ export class LoginService {
     const { requestBody } = data;
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/reset-password/',
+      url: '/api/auth/reset-password',
       body: requestBody,
       mediaType: 'application/json',
-      errors: {
-        422: `Validation Error`
-      }
-    });
-  }
-
-  /**
-   * Recover Password Html Content
-   * HTML Content for Password Recovery
-   * @returns string Successful Response
-   * @throws ApiError
-   */
-  public static recoverPasswordHtmlContent(data: TDataRecoverPasswordHtmlContent): CancelablePromise<string> {
-    const { email } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/password-recovery-html-content/{email}',
-      path: {
-        email
-      },
       errors: {
         422: `Validation Error`
       }

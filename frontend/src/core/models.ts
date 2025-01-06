@@ -1,54 +1,48 @@
-export type Body_login_login_access_token = {
-  grant_type?: string | null;
-  username: string;
+export type LoginRequestBody = {
+  identifier: string;
   password: string;
-  scope?: string;
-  client_id?: string | null;
-  client_secret?: string | null;
+};
+
+export type LoginResponseBody = {
+  jwt: string;
+  user: UserPublic;
 };
 
 export type HTTPValidationError = {
   detail?: Array<ValidationError>;
 };
 
+// Books
+
 export type BookCreate = {
-  title: string;
-  description?: string | null;
-  author: string;
-  genre: string;
-  isbn: string;
-  quantity: number;
-  publication_year: number;
+  titulo: string;
+  autor: string;
+  fecha_de_publicacion: string;
+  ejemplares: number;
   publisher: string;
-  status: boolean;
+  collection: string;
+  locale: string;
 };
 
 export type BookPublic = {
-  id: string;
-  title: string;
-  description?: string | null;
-  author: string;
-  genre: string;
-  isbn: string;
-  quantity: number;
-  publication_year: number;
-  publisher: string;
-  status: boolean;
-  created_at: string;
-  updated_at: string;
-  owner_id: string;
+  id: number;
+  documentId: string;
+  titulo: string;
+  fecha_de_publicacion: string;
+  ejemplares: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 };
 
 export type BookUpdate = {
-  title?: string | null;
-  description?: string | null;
-  author?: string | null;
-  genre?: string | null;
-  isbn?: string | null;
-  quantity?: number | null;
-  publication_year?: number | null;
-  publisher?: string | null;
-  status?: boolean | null;
+  titulo?: string;
+  autor?: string;
+  fecha_de_publicacion?: string;
+  ejemplares?: number;
+  publisher?: string;
+  collection?: string;
+  locale?: string;
 };
 
 export type BooksPublic = {
@@ -56,18 +50,65 @@ export type BooksPublic = {
   count: number;
 };
 
+// Authors
+
+export type AuthorCreate = {
+  name: string;
+  locale: string;
+};
+
+export type AuthorPublic = {
+  id: number;
+  documentId: string;
+  nombre: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+export type AuthorUpdate = {
+  name: string;
+};
+
+export type AuthorsPublic = {
+  data: Array<AuthorPublic>;
+  count: number;
+};
+
+// Publishers
+
+export type PublisherCreate = {
+  name: string;
+  locale: string;
+};
+
+export type PublisherPublic = {
+  id: number;
+  documentId: string;
+  nombre: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+export type PublisherUpdate = {
+  name?: string;
+};
+
+export type PublishersPublic = {
+  data: Array<PublisherPublic>;
+  count: number;
+};
+
+// Users
 export type Message = {
   message: string;
 };
 
 export type NewPassword = {
-  token: string;
-  new_password: string;
-};
-
-export type Token = {
-  access_token: string;
-  token_type?: string;
+  code: string;
+  password: string;
+  passwordConfirmation: string;
 };
 
 export type UpdatePassword = {
@@ -84,30 +125,14 @@ export type UserCreate = {
 };
 
 export type UserPublic = {
+  id: number;
+  username: string;
   email: string;
-  is_active?: boolean;
-  is_superuser?: boolean;
-  full_name?: string | null;
-  id: string;
-};
-
-export type UserRegister = {
-  email: string;
-  password: string;
-  full_name?: string | null;
-};
-
-export type UserUpdate = {
-  email?: string | null;
-  is_active?: boolean;
-  is_superuser?: boolean;
-  full_name?: string | null;
-  password?: string | null;
-};
-
-export type UserUpdateMe = {
-  full_name?: string | null;
-  email?: string | null;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type UsersPublic = {

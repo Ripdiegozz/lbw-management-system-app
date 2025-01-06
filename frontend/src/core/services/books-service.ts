@@ -32,10 +32,11 @@ export class BooksService {
     const { limit = 100, skip = 0 } = data;
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/books/',
+      url: '/api/books/',
       query: {
         skip,
-        limit
+        limit,
+        populate: '*'
       },
       errors: {
         422: `Validation Error`
@@ -53,8 +54,8 @@ export class BooksService {
     const { requestBody } = data;
     return __request(OpenAPI, {
       method: 'POST',
-      url: '/api/v1/books/',
-      body: requestBody,
+      url: '/api/books/',
+      body: { data: requestBody },
       mediaType: 'application/json',
       errors: {
         422: `Validation Error`

@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Body_login_login_access_token as AccessToken } from '@/core';
+import { LoginRequestBody as AccessToken } from '@/core';
 import useAuth from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 
 const loginSchema = z.object({
-  username: z.string().email('Email inválido').nonempty('El email es requerido'),
+  identifier: z.string().email('Email inválido').nonempty('El email es requerido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres').nonempty('La contraseña es requerida')
 });
 
@@ -38,8 +38,8 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       await loginMutation.mutateAsync(data);
     } catch {
       toast({
-        title: 'An error occurred',
-        description: 'We were unable to log you in. Please try again.',
+        title: 'Ocurrió un error',
+        description: 'No pudimos iniciar sesión. Por favor, inténtalo de nuevo.',
         variant: 'destructive'
       });
     }
@@ -63,10 +63,10 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                     id="username"
                     type="email"
                     placeholder="m@example.com"
-                    {...register('username')}
-                    aria-invalid={errors.username ? 'true' : 'false'}
+                    {...register('identifier')}
+                    aria-invalid={errors.identifier ? 'true' : 'false'}
                   />
-                  {errors.username && <p className="text-red-500 text-xs">{errors.username.message}</p>}
+                  {errors.identifier && <p className="text-red-500 text-xs">{errors.identifier.message}</p>}
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center">
@@ -81,12 +81,6 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                 <Button type="submit" className="w-full bg-red-700 hover:bg-red-600/80" disabled={isLoggingIn}>
                   {isLoggingIn ? 'Iniciando sesión...' : 'Iniciar sesión'}
                 </Button>
-              </div>
-              <div className="text-center text-sm">
-                ¿No tienes una cuenta?{' '}
-                <a href="#" className="underline underline-offset-4">
-                  Regístrate
-                </a>
               </div>
             </div>
           </form>

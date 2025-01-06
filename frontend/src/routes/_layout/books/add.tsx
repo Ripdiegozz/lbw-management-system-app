@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_layout/books/add')({
 function AddBookComponent() {
   return (
     <div className="container mx-auto p-6 md:p-10">
-      <h1 className="text-3xl font-bold mb-6">Agregar un libro</h1>
+      <h1 className="text-3xl font-bold my-6 text-center">Agregar un libro</h1>
       <AddBookForm />
     </div>
   );

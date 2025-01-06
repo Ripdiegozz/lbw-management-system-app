@@ -1,7 +1,7 @@
 import { CancelablePromise } from '../models/CancelablePromise';
 import { OpenAPI } from '../models/OpenAPI';
 import { request as __request } from '../models/request';
-import type { Message, UserPublic, UpdatePassword, UserCreate, UserRegister, UsersPublic, UserUpdate, UserUpdateMe } from '../models';
+import type { Message, UserPublic, UpdatePassword, UserCreate, UsersPublic, UserUpdateMe } from '../models';
 
 export type TDataReadUsers = {
   limit?: number;
@@ -16,14 +16,7 @@ export type TDataUpdateUserMe = {
 export type TDataUpdatePasswordMe = {
   requestBody: UpdatePassword;
 };
-export type TDataRegisterUser = {
-  requestBody: UserRegister;
-};
 export type TDataReadUserById = {
-  userId: string;
-};
-export type TDataUpdateUser = {
-  requestBody: UserUpdate;
   userId: string;
 };
 export type TDataDeleteUser = {
@@ -80,7 +73,7 @@ export class UsersService {
   public static readUserMe(): CancelablePromise<UserPublic> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/users/me'
+      url: '/api/users/me'
     });
   }
 
@@ -107,7 +100,7 @@ export class UsersService {
     const { requestBody } = data;
     return __request(OpenAPI, {
       method: 'PATCH',
-      url: '/api/v1/users/me',
+      url: '/api/users/me',
       body: requestBody,
       mediaType: 'application/json',
       errors: {
@@ -136,25 +129,6 @@ export class UsersService {
   }
 
   /**
-   * Register User
-   * Create new user without the need to be logged in.
-   * @returns UserPublic Successful Response
-   * @throws ApiError
-   */
-  public static registerUser(data: TDataRegisterUser): CancelablePromise<UserPublic> {
-    const { requestBody } = data;
-    return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/v1/users/signup',
-      body: requestBody,
-      mediaType: 'application/json',
-      errors: {
-        422: `Validation Error`
-      }
-    });
-  }
-
-  /**
    * Read User By Id
    * Get a specific user by id.
    * @returns UserPublic Successful Response
@@ -168,28 +142,6 @@ export class UsersService {
       path: {
         user_id: userId
       },
-      errors: {
-        422: `Validation Error`
-      }
-    });
-  }
-
-  /**
-   * Update User
-   * Update a user.
-   * @returns UserPublic Successful Response
-   * @throws ApiError
-   */
-  public static updateUser(data: TDataUpdateUser): CancelablePromise<UserPublic> {
-    const { requestBody, userId } = data;
-    return __request(OpenAPI, {
-      method: 'PATCH',
-      url: '/api/v1/users/{user_id}',
-      path: {
-        user_id: userId
-      },
-      body: requestBody,
-      mediaType: 'application/json',
       errors: {
         422: `Validation Error`
       }

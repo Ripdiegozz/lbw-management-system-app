@@ -5,7 +5,7 @@ import { ArrowUpDown } from 'lucide-react';
 
 export const columns: ColumnDef<BookPublic>[] = [
   {
-    accessorKey: 'title',
+    accessorKey: 'titulo',
     meta: 'Título',
     enableGlobalFilter: true,
     header: ({ column }) => {
@@ -18,7 +18,7 @@ export const columns: ColumnDef<BookPublic>[] = [
     }
   },
   {
-    accessorKey: 'author',
+    accessorKey: 'autor.nombre',
     meta: 'Autor',
     header: ({ column }) => {
       return (
@@ -30,34 +30,17 @@ export const columns: ColumnDef<BookPublic>[] = [
     }
   },
   {
-    accessorKey: 'genre',
-    meta: 'Género',
-    header: ({ column }) => {
-      return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          Género
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    }
-  },
-  {
-    header: 'ISBN',
-    meta: 'ISBN',
-    accessorKey: 'isbn'
-  },
-  {
-    header: 'Cantidad',
-    meta: 'Cantidad',
-    accessorKey: 'quantity'
+    header: 'Ejemplares',
+    meta: 'Ejemplares',
+    accessorKey: 'ejemplares'
   },
   {
     header: 'Año de Publicación',
     meta: 'Año de Publicación',
-    accessorKey: 'publication_year'
+    accessorKey: 'fecha_de_publicacion'
   },
   {
-    accessorKey: 'publisher',
+    accessorKey: 'publisher.nombre',
     meta: 'Editorial',
     header: ({ column }) => {
       return (
@@ -69,17 +52,10 @@ export const columns: ColumnDef<BookPublic>[] = [
     }
   },
   {
-    header: 'Creado en',
-    meta: 'Creado en',
-    accessorKey: 'created_at',
+    header: 'Actualizado el',
+    meta: 'Actualizado el',
+    accessorKey: 'updatedAt',
     // Convert the date to a human-readable format
-    cell: ({ row }) => new Date(row.getValue('created_at')).toLocaleDateString()
-  },
-  {
-    header: 'Actualizado en',
-    meta: 'Actualizado en',
-    accessorKey: 'updated_at',
-    // Convert the date to a human-readable format
-    cell: ({ row }) => new Date(row.getValue('updated_at')).toLocaleDateString()
+    cell: ({ row }) => new Date(row.getValue('updatedAt')).toLocaleDateString()
   }
 ];

@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-
 import { AxiosError } from 'axios';
-import { type Body_login_login_access_token as AccessToken, type ApiError, type UserPublic, type UserRegister } from '../core';
-import { LoginService } from '../core/services/auth-service';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
+
+import { type LoginRequestBody, type ApiError, type UserPublic } from '@/core';
+import { LoginService } from '@/core/services/auth-service';
 import { UsersService } from '@/core/services/users-service';
 
 const isLoggedIn = () => {
@@ -14,41 +14,15 @@ const isLoggedIn = () => {
 const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { data: user, isLoading } = useQuery<UserPublic | null, Error>({
     queryKey: ['currentUser'],
     queryFn: UsersService.readUserMe,
     enabled: isLoggedIn()
   });
 
-  const signUpMutation = useMutation({
-    mutationFn: (data: UserRegister) => UsersService.registerUser({ requestBody: data }),
-
-    onSuccess: () => {
-      navigate({ to: '/login' });
-      // Change to toast
-      alert('User created successfully');
-    },
-    onError: (err: ApiError) => {
-      let errDetail = (err.body as any)?.detail;
-
-      if (err instanceof AxiosError) {
-        errDetail = err.message;
-      }
-
-      // Change to toast
-      alert(errDetail);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    }
-  });
-
-  const login = async (data: AccessToken) => {
-    const response = await LoginService.loginAccessToken({
-      formData: data
-    });
-    localStorage.setItem('access_token', response.access_token);
+  const login = async (data: LoginRequestBody) => {
+    const response = await LoginService.loginAccessToken({ requestBody: data });
+    localStorage.setItem('access_token', response.jwt);
   };
 
   const loginMutation = useMutation({
@@ -64,7 +38,7 @@ const useAuth = () => {
       }
 
       if (Array.isArray(errDetail)) {
-        errDetail = 'Something went wrong';
+        errDetail = 'Algo salió mal';
       }
 
       setError(errDetail);
@@ -77,7 +51,6 @@ const useAuth = () => {
   };
 
   return {
-    signUpMutation,
     loginMutation,
     logout,
     user,
