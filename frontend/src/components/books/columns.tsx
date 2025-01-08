@@ -18,7 +18,7 @@ export const columns: ColumnDef<BookPublic>[] = [
     }
   },
   {
-    accessorKey: 'autor.nombre',
+    accessorKey: 'author.nombre',
     meta: 'Autor',
     header: ({ column }) => {
       return (
@@ -37,7 +37,8 @@ export const columns: ColumnDef<BookPublic>[] = [
   {
     header: 'Año de Publicación',
     meta: 'Año de Publicación',
-    accessorKey: 'fecha_de_publicacion'
+    accessorKey: 'fecha_de_publicacion',
+    cell: ({ row }) => new Date(row.getValue('fecha_de_publicacion')).toISOString().split('-')[0]
   },
   {
     accessorKey: 'publisher.nombre',

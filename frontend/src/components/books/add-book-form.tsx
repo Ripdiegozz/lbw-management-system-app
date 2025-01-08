@@ -141,7 +141,7 @@ export function AddBookForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un género" />
+                    <SelectValue placeholder="Selecciona un autor" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -183,7 +183,7 @@ export function AddBookForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un género" />
+                    <SelectValue placeholder="Selecciona una colección" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -255,7 +255,7 @@ export function AddBookForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un género" />
+                    <SelectValue placeholder="Selecciona una editorial" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -286,7 +286,7 @@ export function AddBookForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading || !form.formState.isValid} className="w-full">
           {isLoading ? 'Añadiendo...' : 'Añadir Libro'}
         </Button>
       </form>
