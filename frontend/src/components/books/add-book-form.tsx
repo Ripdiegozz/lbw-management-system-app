@@ -53,7 +53,6 @@ export function AddBookForm() {
       fecha_de_publicacion: new Date().getFullYear().toString(),
       publisher: '',
       collection: '',
-      locale: 'es'
     }
   });
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {

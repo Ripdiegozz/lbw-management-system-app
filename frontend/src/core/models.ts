@@ -21,7 +21,6 @@ export type BookCreate = {
   ejemplares: number;
   publisher: string;
   collection: string;
-  locale: string;
 };
 
 export type BookPublic = {
@@ -42,7 +41,6 @@ export type BookUpdate = {
   ejemplares?: number;
   publisher?: string;
   collection?: string;
-  locale?: string;
 };
 
 export type BooksPublic = {
@@ -54,7 +52,6 @@ export type BooksPublic = {
 
 export type AuthorCreate = {
   nombre: string;
-  locale: string;
 };
 
 export type AuthorPublic = {
@@ -79,7 +76,6 @@ export type AuthorsPublic = {
 
 export type PublisherCreate = {
   nombre: string;
-  locale: string;
 };
 
 export type PublisherPublic = {
@@ -103,7 +99,6 @@ export type PublishersPublic = {
 // Collections
 export type CollectionCreate = {
   nombre: string;
-  locale: string;
 };
 
 export type CollectionPublic = {
