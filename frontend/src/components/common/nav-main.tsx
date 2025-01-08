@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Link, useLocation } from '@tanstack/react-router';
 import { cn } from '@/lib/utils';
+import { ModalType, useModal } from '@/hooks/use-modal';
 
 export function NavMain({
   items
@@ -23,11 +24,15 @@ export function NavMain({
     isActive?: boolean;
     items?: {
       title: string;
-      url: string;
+      url: string | null;
+      action?: string | null;
+      icon: LucideIcon | null;
+      type: string;
     }[];
   }[];
 }) {
   const { href } = useLocation();
+  const { onOpen } = useModal();
 
   return (
     <SidebarGroup>
@@ -47,19 +52,32 @@ export function NavMain({
                 <SidebarMenuSub>
                   {item.items?.map(subItem => {
                     const path = href.split('?')[0];
+                    const type = subItem.type === 'button' ? 'button' : 'link';
+                    const action = subItem.action;
+                    const url = subItem.url ?? '#';
 
                     return (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <Link
-                            to={subItem.url}
-                            className={cn(
-                              'flex items-center w-full px-4 py-2',
-                              path === subItem.url.split('?')[0] && 'bg-gray-200 font-semibold'
-                            )}
-                          >
-                            <span>{subItem.title}</span>
-                          </Link>
+                          {type === 'link' ? (
+                            <Link
+                              to={url}
+                              className={cn(
+                                'flex items-center w-full px-4 py-2',
+                                path === url.split('?')[0] && 'bg-gray-200 font-semibold'
+                              )}
+                            >
+                              <span>{subItem.title}</span>
+                            </Link>
+                          ) : (
+                            <button
+                              className="flex items-center w-full px-4 py-2 text-sm transition-colors duration-200"
+                              onClick={() => onOpen(action as ModalType)}
+                            >
+                              {subItem.icon && <subItem.icon />}
+                              {subItem.title}
+                            </button>
+                          )}
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     );

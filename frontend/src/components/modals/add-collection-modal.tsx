@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useModal } from '@/hooks/use-modal';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,7 +34,7 @@ export function CreateCollectionModal() {
     onSuccess: () => {
       toast({
         title: 'Éxito',
-        description: 'El autor ha sido creado correctamente',
+        description: 'La colección ha sido creada correctamente',
         variant: 'default'
       });
       setIsLoading(false);
@@ -45,7 +45,7 @@ export function CreateCollectionModal() {
       setIsLoading(false);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['authors'] });
+      queryClient.invalidateQueries({ queryKey: ['collections'] });
     }
   });
 
@@ -67,6 +67,7 @@ export function CreateCollectionModal() {
           <DialogDescription className="text-center text-primary">
             Ingresa el nombre de la colección. Presiona guardar cuando termines.
           </DialogDescription>
+          <DialogClose onClick={handleClose} />
         </DialogHeader>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

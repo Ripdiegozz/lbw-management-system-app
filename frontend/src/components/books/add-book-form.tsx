@@ -52,7 +52,7 @@ export function AddBookForm() {
       ejemplares: 1,
       fecha_de_publicacion: new Date().getFullYear().toString(),
       publisher: '',
-      collection: '',
+      collection: ''
     }
   });
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -15,7 +15,10 @@ import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutUsersImport } from './routes/_layout/users'
+import { Route as LayoutPublishersIndexImport } from './routes/_layout/publishers/index'
+import { Route as LayoutCollectionsIndexImport } from './routes/_layout/collections/index'
 import { Route as LayoutBooksIndexImport } from './routes/_layout/books/index'
+import { Route as LayoutAuthorsIndexImport } from './routes/_layout/authors/index'
 import { Route as LayoutBooksAddImport } from './routes/_layout/books/add'
 
 // Create/Update Routes
@@ -43,9 +46,27 @@ const LayoutUsersRoute = LayoutUsersImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
+const LayoutPublishersIndexRoute = LayoutPublishersIndexImport.update({
+  id: '/publishers/',
+  path: '/publishers/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutCollectionsIndexRoute = LayoutCollectionsIndexImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutBooksIndexRoute = LayoutBooksIndexImport.update({
   id: '/books/',
   path: '/books/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAuthorsIndexRoute = LayoutAuthorsIndexImport.update({
+  id: '/authors/',
+  path: '/authors/',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -94,11 +115,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutBooksAddImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/authors/': {
+      id: '/_layout/authors/'
+      path: '/authors'
+      fullPath: '/authors'
+      preLoaderRoute: typeof LayoutAuthorsIndexImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/books/': {
       id: '/_layout/books/'
       path: '/books'
       fullPath: '/books'
       preLoaderRoute: typeof LayoutBooksIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/collections/': {
+      id: '/_layout/collections/'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof LayoutCollectionsIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/publishers/': {
+      id: '/_layout/publishers/'
+      path: '/publishers'
+      fullPath: '/publishers'
+      preLoaderRoute: typeof LayoutPublishersIndexImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -110,14 +152,20 @@ interface LayoutRouteChildren {
   LayoutUsersRoute: typeof LayoutUsersRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutBooksAddRoute: typeof LayoutBooksAddRoute
+  LayoutAuthorsIndexRoute: typeof LayoutAuthorsIndexRoute
   LayoutBooksIndexRoute: typeof LayoutBooksIndexRoute
+  LayoutCollectionsIndexRoute: typeof LayoutCollectionsIndexRoute
+  LayoutPublishersIndexRoute: typeof LayoutPublishersIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutUsersRoute: LayoutUsersRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutBooksAddRoute: LayoutBooksAddRoute,
+  LayoutAuthorsIndexRoute: LayoutAuthorsIndexRoute,
   LayoutBooksIndexRoute: LayoutBooksIndexRoute,
+  LayoutCollectionsIndexRoute: LayoutCollectionsIndexRoute,
+  LayoutPublishersIndexRoute: LayoutPublishersIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -129,7 +177,10 @@ export interface FileRoutesByFullPath {
   '/users': typeof LayoutUsersRoute
   '/': typeof LayoutIndexRoute
   '/books/add': typeof LayoutBooksAddRoute
+  '/authors': typeof LayoutAuthorsIndexRoute
   '/books': typeof LayoutBooksIndexRoute
+  '/collections': typeof LayoutCollectionsIndexRoute
+  '/publishers': typeof LayoutPublishersIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -137,7 +188,10 @@ export interface FileRoutesByTo {
   '/users': typeof LayoutUsersRoute
   '/': typeof LayoutIndexRoute
   '/books/add': typeof LayoutBooksAddRoute
+  '/authors': typeof LayoutAuthorsIndexRoute
   '/books': typeof LayoutBooksIndexRoute
+  '/collections': typeof LayoutCollectionsIndexRoute
+  '/publishers': typeof LayoutPublishersIndexRoute
 }
 
 export interface FileRoutesById {
@@ -147,14 +201,34 @@ export interface FileRoutesById {
   '/_layout/users': typeof LayoutUsersRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/books/add': typeof LayoutBooksAddRoute
+  '/_layout/authors/': typeof LayoutAuthorsIndexRoute
   '/_layout/books/': typeof LayoutBooksIndexRoute
+  '/_layout/collections/': typeof LayoutCollectionsIndexRoute
+  '/_layout/publishers/': typeof LayoutPublishersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/users' | '/' | '/books/add' | '/books'
+  fullPaths:
+    | ''
+    | '/login'
+    | '/users'
+    | '/'
+    | '/books/add'
+    | '/authors'
+    | '/books'
+    | '/collections'
+    | '/publishers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/users' | '/' | '/books/add' | '/books'
+  to:
+    | '/login'
+    | '/users'
+    | '/'
+    | '/books/add'
+    | '/authors'
+    | '/books'
+    | '/collections'
+    | '/publishers'
   id:
     | '__root__'
     | '/_layout'
@@ -162,7 +236,10 @@ export interface FileRouteTypes {
     | '/_layout/users'
     | '/_layout/'
     | '/_layout/books/add'
+    | '/_layout/authors/'
     | '/_layout/books/'
+    | '/_layout/collections/'
+    | '/_layout/publishers/'
   fileRoutesById: FileRoutesById
 }
 
@@ -196,7 +273,10 @@ export const routeTree = rootRoute
         "/_layout/users",
         "/_layout/",
         "/_layout/books/add",
-        "/_layout/books/"
+        "/_layout/authors/",
+        "/_layout/books/",
+        "/_layout/collections/",
+        "/_layout/publishers/"
       ]
     },
     "/login": {
@@ -214,8 +294,20 @@ export const routeTree = rootRoute
       "filePath": "_layout/books/add.tsx",
       "parent": "/_layout"
     },
+    "/_layout/authors/": {
+      "filePath": "_layout/authors/index.tsx",
+      "parent": "/_layout"
+    },
     "/_layout/books/": {
       "filePath": "_layout/books/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/collections/": {
+      "filePath": "_layout/collections/index.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/publishers/": {
+      "filePath": "_layout/publishers/index.tsx",
       "parent": "/_layout"
     }
   }

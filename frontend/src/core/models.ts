@@ -34,6 +34,20 @@ export type BookPublic = {
   publishedAt: string;
 };
 
+export type BookPublicWithRelations = {
+  id: number;
+  documentId: string;
+  titulo: string;
+  fecha_de_publicacion: string;
+  ejemplares: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  author: AuthorPublic;
+  publisher: PublisherPublic;
+  collection: CollectionPublic;
+};
+
 export type BookUpdate = {
   titulo?: string;
   author?: string;
@@ -44,7 +58,7 @@ export type BookUpdate = {
 };
 
 export type BooksPublic = {
-  data: Array<BookPublic>;
+  data: Array<BookPublicWithRelations>;
   count: number;
 };
 

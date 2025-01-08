@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useModal } from '@/hooks/use-modal';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,9 +9,9 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiError, PublisherCreate } from '@/core';
 import { useToast } from '@/hooks/use-toast';
-import { AuthorService } from '@/core/services/author-service';
 import { handleError } from '@/core/utils';
 import { publisherSchema } from '@/core/schemas/publisher';
+import { PublisherService } from '@/core/services/publisher-service';
 
 export function CreatePublisherModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,11 +30,11 @@ export function CreatePublisherModal() {
   });
 
   const mutation = useMutation({
-    mutationFn: (data: PublisherCreate) => AuthorService.createAuthor({ requestBody: data }),
+    mutationFn: (data: PublisherCreate) => PublisherService.createPublisher({ requestBody: data }),
     onSuccess: () => {
       toast({
         title: 'Éxito',
-        description: 'El autor ha sido creado correctamente',
+        description: 'La editorial ha sido creada correctamente',
         variant: 'default'
       });
       setIsLoading(false);
@@ -45,7 +45,7 @@ export function CreatePublisherModal() {
       setIsLoading(false);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['authors'] });
+      queryClient.invalidateQueries({ queryKey: ['publishers'] });
     }
   });
 
@@ -67,6 +67,7 @@ export function CreatePublisherModal() {
           <DialogDescription className="text-center text-primary">
             Ingresa el nombre de la editorial. Presiona guardar cuando termines.
           </DialogDescription>
+          <DialogClose onClick={handleClose} />
         </DialogHeader>
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

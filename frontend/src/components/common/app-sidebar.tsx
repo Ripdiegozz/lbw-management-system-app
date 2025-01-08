@@ -8,7 +8,7 @@ import useAuth from '@/hooks/use-auth';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user: activeUser } = useAuth();
-  const name = activeUser?.full_name ?? activeUser?.email ?? 'Invitado';
+  const name = activeUser?.username ?? activeUser?.email ?? 'Invitado';
 
   return (
     <Sidebar collapsible="icon" {...props}>
