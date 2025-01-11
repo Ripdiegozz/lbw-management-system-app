@@ -1,9 +1,10 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router';
 
 import useAuth, { isLoggedIn } from '../hooks/use-auth';
-import { Loader } from 'lucide-react';
+import { Loader, Slash } from 'lucide-react';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/common/app-sidebar';
+import { GenericBreadcrumb } from '@/components/common/generic-breadcrumb';
 
 export const Route = createFileRoute('/_layout')({
   component: Layout,
@@ -29,8 +30,11 @@ function Layout() {
             <h2 className="text-xl font-semibold text-gray-800 ml-2">Cargando...</h2>
           </div>
         ) : (
-          <div className="flex flex-1 flex-wrap">
-            <SidebarTrigger />
+          <div className="flex flex-col w-full h-full">
+            <div className="w-full flex items-center gap-4 p-4 border-b">
+              <SidebarTrigger />
+              <GenericBreadcrumb Separator={Slash} />
+            </div>
             <Outlet />
           </div>
         )}

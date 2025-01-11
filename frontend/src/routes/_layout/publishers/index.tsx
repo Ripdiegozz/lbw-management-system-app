@@ -2,7 +2,7 @@ import { GenericTableComponent } from '@/components/common/generic-table';
 import { NotFound } from '@/components/common/not-found';
 import { Button } from '@/components/ui/button';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Loader, PlusCircle } from 'lucide-react';
+import { Loader, PlusCircle, RefreshCcw } from 'lucide-react';
 import { columns } from '@/components/publishers/columns';
 import { z } from 'zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -60,12 +60,26 @@ function PublishersComponent() {
 
   return (
     <div className="container mx-auto p-6 md:p-10">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center my-6">
         <h1 className="text-3xl font-bold">Administración de editoriales</h1>
-        <Button onClick={() => onOpen('create-publisher')}>
-          <PlusCircle className="mr-2" />
-          Agregar una editorial
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="ghost" onClick={() => onOpen('create-publisher')}>
+            <PlusCircle className="mr-2" />
+            Agregar una editorial
+          </Button>
+          <Button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['publishers', { page }]
+              })
+            }
+            disabled={isPending}
+            variant="outline"
+          >
+            <RefreshCcw className="mr-2" />
+            Refrescar
+          </Button>
+        </div>
       </div>
       <div className="rounded-md border p-4">
         {isPending ? (

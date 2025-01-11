@@ -2,7 +2,7 @@ import { GenericTableComponent } from '@/components/common/generic-table';
 import { NotFound } from '@/components/common/not-found';
 import { Button } from '@/components/ui/button';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
-import { Loader, PlusCircle } from 'lucide-react';
+import { Loader, PlusCircle, RefreshCcw } from 'lucide-react';
 import { columns } from '@/components/books/columns';
 import { z } from 'zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -54,14 +54,28 @@ function BooksComponent() {
 
   return (
     <div className="container mx-auto p-6 md:p-10">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center my-6">
         <h1 className="text-3xl font-bold">Administración de libros</h1>
-        <Link href="/books/add">
-          <Button>
-            <PlusCircle className="mr-2" />
-            Agregar un nuevo libro
+        <div className="flex gap-2">
+          <Link href="/books/add">
+            <Button variant="ghost">
+              <PlusCircle className="mr-2" />
+              Agregar un nuevo libro
+            </Button>
+          </Link>
+          <Button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['books', { page }]
+              })
+            }
+            disabled={isPending}
+            variant="outline"
+          >
+            <RefreshCcw className="mr-2" />
+            Refrescar
           </Button>
-        </Link>
+        </div>
       </div>
       <div className="rounded-md border p-4">
         {isPending ? (
