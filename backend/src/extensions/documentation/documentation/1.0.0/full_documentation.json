@@ -2,22 +2,25 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Fundación Literaria León Bienvenido Weffer API",
-    "description": "API for Fundación Literaria León Bienvenido Weffer Management System App",
+    "title": "DOCUMENTATION",
+    "description": "",
     "termsOfService": "YOUR_TERMS_OF_SERVICE_URL",
     "contact": {
-      "name": "Diego Garcia",
-      "email": "diegogarciag63@gmail.com",
-      "url": "https://dagadev.net/"
+      "name": "TEAM",
+      "email": "contact-email@something.io",
+      "url": "mywebsite.io"
     },
     "license": {
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2025-01-11T21:31:15.713Z"
+    "x-generation-date": "2025-01-11T21:53:39.021Z"
   },
   "x-strapi-config": {
-    "plugins": ["upload", "users-permissions"]
+    "plugins": [
+      "upload",
+      "users-permissions"
+    ]
   },
   "servers": [
     {
@@ -99,7 +102,9 @@
             }
           }
         },
-        "tags": ["Autor"],
+        "tags": [
+          "Autor"
+        ],
         "parameters": [
           {
             "name": "sort",
@@ -269,7 +274,9 @@
             }
           }
         },
-        "tags": ["Autor"],
+        "tags": [
+          "Autor"
+        ],
         "parameters": [],
         "operationId": "post/autors",
         "requestBody": {
@@ -284,7 +291,7 @@
         }
       }
     },
-    "/autors/{documentId}": {
+    "/autors/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -348,20 +355,22 @@
             }
           }
         },
-        "tags": ["Autor"],
+        "tags": [
+          "Autor"
+        ],
         "parameters": [
           {
-            "name": "documentId",
+            "name": "id",
             "in": "path",
             "description": "",
             "deprecated": false,
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
-        "operationId": "get/autors/{documentId}"
+        "operationId": "get/autors/{id}"
       },
       "put": {
         "responses": {
@@ -426,7 +435,9 @@
             }
           }
         },
-        "tags": ["Autor"],
+        "tags": [
+          "Autor"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -439,7 +450,7 @@
             }
           }
         ],
-        "operationId": "put/autors/{documentId}",
+        "operationId": "put/autors/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -515,7 +526,9 @@
             }
           }
         },
-        "tags": ["Autor"],
+        "tags": [
+          "Autor"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -528,7 +541,7 @@
             }
           }
         ],
-        "operationId": "delete/autors/{documentId}"
+        "operationId": "delete/autors/{id}"
       }
     },
     "/books": {
@@ -595,7 +608,9 @@
             }
           }
         },
-        "tags": ["Book"],
+        "tags": [
+          "Book"
+        ],
         "parameters": [
           {
             "name": "sort",
@@ -765,7 +780,9 @@
             }
           }
         },
-        "tags": ["Book"],
+        "tags": [
+          "Book"
+        ],
         "parameters": [],
         "operationId": "post/books",
         "requestBody": {
@@ -780,7 +797,7 @@
         }
       }
     },
-    "/books/{documentId}": {
+    "/books/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -844,7 +861,9 @@
             }
           }
         },
-        "tags": ["Book"],
+        "tags": [
+          "Book"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -857,7 +876,7 @@
             }
           }
         ],
-        "operationId": "get/books/{documentId}"
+        "operationId": "get/books/{id}"
       },
       "put": {
         "responses": {
@@ -922,7 +941,9 @@
             }
           }
         },
-        "tags": ["Book"],
+        "tags": [
+          "Book"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -935,7 +956,7 @@
             }
           }
         ],
-        "operationId": "put/books/{documentId}",
+        "operationId": "put/books/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -1011,7 +1032,9 @@
             }
           }
         },
-        "tags": ["Book"],
+        "tags": [
+          "Book"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1024,7 +1047,7 @@
             }
           }
         ],
-        "operationId": "delete/books/{documentId}"
+        "operationId": "delete/books/{id}"
       }
     },
     "/collections": {
@@ -1091,7 +1114,9 @@
             }
           }
         },
-        "tags": ["Collection"],
+        "tags": [
+          "Collection"
+        ],
         "parameters": [
           {
             "name": "sort",
@@ -1261,7 +1286,9 @@
             }
           }
         },
-        "tags": ["Collection"],
+        "tags": [
+          "Collection"
+        ],
         "parameters": [],
         "operationId": "post/collections",
         "requestBody": {
@@ -1276,7 +1303,7 @@
         }
       }
     },
-    "/collections/{documentId}": {
+    "/collections/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -1340,7 +1367,9 @@
             }
           }
         },
-        "tags": ["Collection"],
+        "tags": [
+          "Collection"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1353,7 +1382,7 @@
             }
           }
         ],
-        "operationId": "get/collections/{documentId}"
+        "operationId": "get/collections/{id}"
       },
       "put": {
         "responses": {
@@ -1418,7 +1447,9 @@
             }
           }
         },
-        "tags": ["Collection"],
+        "tags": [
+          "Collection"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1431,7 +1462,7 @@
             }
           }
         ],
-        "operationId": "put/collections/{documentId}",
+        "operationId": "put/collections/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -1507,7 +1538,9 @@
             }
           }
         },
-        "tags": ["Collection"],
+        "tags": [
+          "Collection"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -1520,7 +1553,7 @@
             }
           }
         ],
-        "operationId": "delete/collections/{documentId}"
+        "operationId": "delete/collections/{id}"
       }
     },
     "/global": {
@@ -1587,7 +1620,9 @@
             }
           }
         },
-        "tags": ["Global"],
+        "tags": [
+          "Global"
+        ],
         "parameters": [
           {
             "name": "sort",
@@ -1757,7 +1792,9 @@
             }
           }
         },
-        "tags": ["Global"],
+        "tags": [
+          "Global"
+        ],
         "parameters": [],
         "operationId": "put/global",
         "requestBody": {
@@ -1835,7 +1872,9 @@
             }
           }
         },
-        "tags": ["Global"],
+        "tags": [
+          "Global"
+        ],
         "parameters": [],
         "operationId": "delete/global"
       }
@@ -1904,7 +1943,9 @@
             }
           }
         },
-        "tags": ["Publisher"],
+        "tags": [
+          "Publisher"
+        ],
         "parameters": [
           {
             "name": "sort",
@@ -2074,7 +2115,9 @@
             }
           }
         },
-        "tags": ["Publisher"],
+        "tags": [
+          "Publisher"
+        ],
         "parameters": [],
         "operationId": "post/publishers",
         "requestBody": {
@@ -2089,7 +2132,7 @@
         }
       }
     },
-    "/publishers/{documentId}": {
+    "/publishers/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -2153,7 +2196,9 @@
             }
           }
         },
-        "tags": ["Publisher"],
+        "tags": [
+          "Publisher"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -2166,7 +2211,7 @@
             }
           }
         ],
-        "operationId": "get/publishers/{documentId}"
+        "operationId": "get/publishers/{id}"
       },
       "put": {
         "responses": {
@@ -2231,7 +2276,9 @@
             }
           }
         },
-        "tags": ["Publisher"],
+        "tags": [
+          "Publisher"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -2244,7 +2291,7 @@
             }
           }
         ],
-        "operationId": "put/publishers/{documentId}",
+        "operationId": "put/publishers/{id}",
         "requestBody": {
           "required": true,
           "content": {
@@ -2320,7 +2367,9 @@
             }
           }
         },
-        "tags": ["Publisher"],
+        "tags": [
+          "Publisher"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -2333,7 +2382,7 @@
             }
           }
         ],
-        "operationId": "delete/publishers/{documentId}"
+        "operationId": "delete/publishers/{id}"
       }
     },
     "/upload": {
@@ -2355,14 +2404,18 @@
           }
         },
         "summary": "",
-        "tags": ["Upload - File"],
+        "tags": [
+          "Upload - File"
+        ],
         "requestBody": {
           "description": "Upload files",
           "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": ["files"],
+                "required": [
+                  "files"
+                ],
                 "type": "object",
                 "properties": {
                   "path": {
@@ -2395,7 +2448,7 @@
         }
       }
     },
-    "/upload?id={documentId}": {
+    "/upload?id={id}": {
       "post": {
         "parameters": [
           {
@@ -2425,7 +2478,9 @@
           }
         },
         "summary": "",
-        "tags": ["Upload - File"],
+        "tags": [
+          "Upload - File"
+        ],
         "requestBody": {
           "description": "Upload files",
           "required": true,
@@ -2461,7 +2516,9 @@
     },
     "/upload/files": {
       "get": {
-        "tags": ["Upload - File"],
+        "tags": [
+          "Upload - File"
+        ],
         "responses": {
           "200": {
             "description": "Get a list of files",
@@ -2479,7 +2536,7 @@
         }
       }
     },
-    "/upload/files/{documentId}": {
+    "/upload/files/{id}": {
       "get": {
         "parameters": [
           {
@@ -2493,7 +2550,9 @@
             }
           }
         ],
-        "tags": ["Upload - File"],
+        "tags": [
+          "Upload - File"
+        ],
         "responses": {
           "200": {
             "description": "Get a specific file",
@@ -2520,7 +2579,9 @@
             }
           }
         ],
-        "tags": ["Upload - File"],
+        "tags": [
+          "Upload - File"
+        ],
         "responses": {
           "200": {
             "description": "Delete a file",
@@ -2549,7 +2610,9 @@
             }
           }
         ],
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Login with a provider",
         "description": "Redirects to provider login before being redirect to /auth/{provider}/callback",
         "responses": {
@@ -2571,7 +2634,9 @@
     },
     "/auth/local": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Local login",
         "description": "Returns a jwt token and user info",
         "requestBody": {
@@ -2622,7 +2687,9 @@
     },
     "/auth/local/register": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Register a user",
         "description": "Returns a jwt token and user info",
         "requestBody": {
@@ -2677,7 +2744,9 @@
     },
     "/auth/{provider}/callback": {
       "get": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Default Callback from provider auth",
         "parameters": [
           {
@@ -2716,7 +2785,9 @@
     },
     "/auth/forgot-password": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Send rest password email",
         "requestBody": {
           "required": true,
@@ -2746,7 +2817,9 @@
                   "properties": {
                     "ok": {
                       "type": "string",
-                      "enum": [true]
+                      "enum": [
+                        true
+                      ]
                     }
                   }
                 }
@@ -2768,7 +2841,9 @@
     },
     "/auth/reset-password": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Rest user password",
         "requestBody": {
           "required": true,
@@ -2822,7 +2897,9 @@
     },
     "/auth/change-password": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Update user's own password",
         "requestBody": {
           "required": true,
@@ -2876,7 +2953,9 @@
     },
     "/auth/email-confirmation": {
       "get": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Confirm user email",
         "parameters": [
           {
@@ -2907,7 +2986,9 @@
     },
     "/auth/send-email-confirmation": {
       "post": {
-        "tags": ["Users-Permissions - Auth"],
+        "tags": [
+          "Users-Permissions - Auth"
+        ],
         "summary": "Send confirmation email",
         "requestBody": {
           "required": true,
@@ -2937,7 +3018,9 @@
                     },
                     "sent": {
                       "type": "string",
-                      "enum": [true]
+                      "enum": [
+                        true
+                      ]
                     }
                   }
                 }
@@ -2959,7 +3042,9 @@
     },
     "/users-permissions/permissions": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get default generated permissions",
         "responses": {
           "200": {
@@ -3028,7 +3113,9 @@
     },
     "/users-permissions/roles": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "List roles",
         "responses": {
           "200": {
@@ -3087,7 +3174,9 @@
         }
       },
       "post": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Create a role",
         "requestBody": {
           "$ref": "#/components/requestBodies/Users-Permissions-RoleRequest"
@@ -3102,7 +3191,9 @@
                   "properties": {
                     "ok": {
                       "type": "string",
-                      "enum": [true]
+                      "enum": [
+                        true
+                      ]
                     }
                   }
                 }
@@ -3122,9 +3213,11 @@
         }
       }
     },
-    "/users-permissions/roles/{documentId}": {
+    "/users-permissions/roles/{id}": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get a role",
         "parameters": [
           {
@@ -3189,7 +3282,9 @@
     },
     "/users-permissions/roles/{role}": {
       "put": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Update a role",
         "parameters": [
           {
@@ -3215,7 +3310,9 @@
                   "properties": {
                     "ok": {
                       "type": "string",
-                      "enum": [true]
+                      "enum": [
+                        true
+                      ]
                     }
                   }
                 }
@@ -3235,7 +3332,9 @@
         }
       },
       "delete": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Delete a role",
         "parameters": [
           {
@@ -3258,7 +3357,9 @@
                   "properties": {
                     "ok": {
                       "type": "string",
-                      "enum": [true]
+                      "enum": [
+                        true
+                      ]
                     }
                   }
                 }
@@ -3280,7 +3381,9 @@
     },
     "/users": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get list of users",
         "responses": {
           "200": {
@@ -3321,7 +3424,9 @@
         }
       },
       "post": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Create a user",
         "requestBody": {
           "required": true,
@@ -3329,7 +3434,11 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["username", "email", "password"],
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "type": "string"
@@ -3404,9 +3513,11 @@
         }
       }
     },
-    "/users/{documentId}": {
+    "/users/{id}": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get a user",
         "parameters": [
           {
@@ -3453,7 +3564,9 @@
         }
       },
       "put": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Update a user",
         "parameters": [
           {
@@ -3472,7 +3585,11 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["username", "email", "password"],
+                "required": [
+                  "username",
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "type": "string"
@@ -3547,7 +3664,9 @@
         }
       },
       "delete": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Delete a user",
         "parameters": [
           {
@@ -3600,7 +3719,9 @@
     },
     "/users/me": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get authenticated user info",
         "responses": {
           "200": {
@@ -3638,7 +3759,9 @@
     },
     "/users/count": {
       "get": {
-        "tags": ["Users-Permissions - Users & Roles"],
+        "tags": [
+          "Users-Permissions - Users & Roles"
+        ],
         "summary": "Get user count",
         "responses": {
           "200": {
@@ -3677,7 +3800,9 @@
     "schemas": {
       "Error": {
         "type": "object",
-        "required": ["error"],
+        "required": [
+          "error"
+        ],
         "properties": {
           "data": {
             "nullable": true,
@@ -3714,12 +3839,20 @@
       },
       "AutorRequest": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "properties": {
           "data": {
+            "required": [
+              "slug"
+            ],
             "type": "object",
             "properties": {
               "nombre": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "locale": {
@@ -3780,6 +3913,9 @@
       },
       "Autor": {
         "type": "object",
+        "required": [
+          "slug"
+        ],
         "properties": {
           "id": {
             "type": "number"
@@ -3788,6 +3924,9 @@
             "type": "string"
           },
           "nombre": {
+            "type": "string"
+          },
+          "slug": {
             "type": "string"
           },
           "createdAt": {
@@ -4093,6 +4232,9 @@
                 "nombre": {
                   "type": "string"
                 },
+                "slug": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -4162,9 +4304,14 @@
       },
       "BookRequest": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "properties": {
           "data": {
+            "required": [
+              "slug"
+            ],
             "type": "object",
             "properties": {
               "titulo": {
@@ -4209,6 +4356,9 @@
                   }
                 ],
                 "example": "string or id"
+              },
+              "slug": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -4268,6 +4418,9 @@
       },
       "Book": {
         "type": "object",
+        "required": [
+          "slug"
+        ],
         "properties": {
           "id": {
             "type": "number"
@@ -4288,6 +4441,9 @@
                 "type": "string"
               },
               "nombre": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "createdAt": {
@@ -4614,6 +4770,9 @@
               "nombre": {
                 "type": "string"
               },
+              "slug": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -4679,6 +4838,9 @@
               "nombre": {
                 "type": "string"
               },
+              "slug": {
+                "type": "string"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time"
@@ -4731,6 +4893,9 @@
                 }
               }
             }
+          },
+          "slug": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -4823,6 +4988,9 @@
                     }
                   }
                 },
+                "slug": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -4892,12 +5060,17 @@
       },
       "CollectionRequest": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "properties": {
           "data": {
             "type": "object",
             "properties": {
               "nombre": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "locale": {
@@ -4966,6 +5139,9 @@
             "type": "string"
           },
           "nombre": {
+            "type": "string"
+          },
+          "slug": {
             "type": "string"
           },
           "createdAt": {
@@ -5271,6 +5447,9 @@
                 "nombre": {
                   "type": "string"
                 },
+                "slug": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -5340,10 +5519,15 @@
       },
       "GlobalRequest": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "properties": {
           "data": {
-            "required": ["siteName", "siteDescription"],
+            "required": [
+              "siteName",
+              "siteDescription"
+            ],
             "type": "object",
             "properties": {
               "siteName": {
@@ -5424,7 +5608,10 @@
       },
       "Global": {
         "type": "object",
-        "required": ["siteName", "siteDescription"],
+        "required": [
+          "siteName",
+          "siteDescription"
+        ],
         "properties": {
           "id": {
             "type": "number"
@@ -6437,12 +6624,17 @@
       },
       "PublisherRequest": {
         "type": "object",
-        "required": ["data"],
+        "required": [
+          "data"
+        ],
         "properties": {
           "data": {
             "type": "object",
             "properties": {
               "nombre": {
+                "type": "string"
+              },
+              "slug": {
                 "type": "string"
               },
               "locale": {
@@ -6511,6 +6703,9 @@
             "type": "string"
           },
           "nombre": {
+            "type": "string"
+          },
+          "slug": {
             "type": "string"
           },
           "createdAt": {
@@ -6814,6 +7009,9 @@
                   "type": "string"
                 },
                 "nombre": {
+                  "type": "string"
+                },
+                "slug": {
                   "type": "string"
                 },
                 "createdAt": {

@@ -20,6 +20,7 @@ export type BookCreate = {
   fecha_de_publicacion: string;
   ejemplares: number;
   publisher: string;
+  slug: string;
   collection: string;
 };
 
@@ -31,6 +32,7 @@ export type BookPublic = {
   ejemplares: number;
   createdAt: string;
   updatedAt: string;
+  slug: string;
   publishedAt: string;
 };
 
@@ -45,6 +47,7 @@ export type BookPublicWithRelations = {
   publishedAt: string;
   author: AuthorPublic;
   publisher: PublisherPublic;
+  slug: string;
   collection: CollectionPublic;
 };
 
@@ -54,6 +57,7 @@ export type BookUpdate = {
   fecha_de_publicacion?: string;
   ejemplares?: number;
   publisher?: string;
+  slug: string;
   collection?: string;
 };
 
@@ -66,12 +70,14 @@ export type BooksPublic = {
 
 export type AuthorCreate = {
   nombre: string;
+  slug: string;
 };
 
 export type AuthorPublic = {
   id: number;
   documentId: string;
   nombre: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -79,6 +85,7 @@ export type AuthorPublic = {
 
 export type AuthorUpdate = {
   nombre: string;
+  slug: string;
 };
 
 export type AuthorsPublic = {
@@ -90,12 +97,14 @@ export type AuthorsPublic = {
 
 export type PublisherCreate = {
   nombre: string;
+  slug: string;
 };
 
 export type PublisherPublic = {
   id: number;
   documentId: string;
   nombre: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -103,6 +112,7 @@ export type PublisherPublic = {
 
 export type PublisherUpdate = {
   nombre?: string;
+  slug: string;
 };
 
 export type PublishersPublic = {
@@ -113,12 +123,14 @@ export type PublishersPublic = {
 // Collections
 export type CollectionCreate = {
   nombre: string;
+  slug: string;
 };
 
 export type CollectionPublic = {
   id: number;
   documentId: string;
   nombre: string;
+  slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -126,6 +138,7 @@ export type CollectionPublic = {
 
 export type CollectionUpdate = {
   nombre?: string;
+  slug: string;
 };
 
 export type CollectionsPublic = {

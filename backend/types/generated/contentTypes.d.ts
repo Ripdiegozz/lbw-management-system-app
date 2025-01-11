@@ -389,6 +389,7 @@ export interface ApiAutorAutor extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -431,6 +432,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::publisher.publisher'
     >;
+    slug: Schema.Attribute.UID<'titulo'> & Schema.Attribute.Required;
     titulo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -461,6 +463,7 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -522,6 +525,7 @@ export interface ApiPublisherPublisher extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'nombre'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
