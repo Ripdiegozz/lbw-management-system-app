@@ -127,4 +127,19 @@ export class BooksService {
       }
     });
   }
+
+  public static readXlsx(data: { file: File }): CancelablePromise<Message> {
+    const { file } = data;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/api/books/import',
+      body: formData,
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
 }
