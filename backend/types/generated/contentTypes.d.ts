@@ -396,6 +396,39 @@ export interface ApiAutorAutor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBookTypeBookType extends Struct.CollectionTypeSchema {
+  collectionName: 'book_types';
+  info: {
+    displayName: 'BookType';
+    pluralName: 'book-types';
+    singularName: 'book-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::book-type.book-type'
+    > &
+      Schema.Attribute.Private;
+    nombre: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        minLength: 1;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBookBook extends Struct.CollectionTypeSchema {
   collectionName: 'books';
   info: {
@@ -432,7 +465,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::publisher.publisher'
     >;
-    slug: Schema.Attribute.UID<'titulo'> & Schema.Attribute.Required;
+    tipo: Schema.Attribute.Relation<'oneToOne', 'api::book-type.book-type'>;
     titulo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1042,6 +1075,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::autor.autor': ApiAutorAutor;
+      'api::book-type.book-type': ApiBookTypeBookType;
       'api::book.book': ApiBookBook;
       'api::collection.collection': ApiCollectionCollection;
       'api::global.global': ApiGlobalGlobal;

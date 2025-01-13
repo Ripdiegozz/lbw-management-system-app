@@ -43,7 +43,7 @@ function BooksComponent() {
     placeholderData: prevData => prevData
   });
 
-  const hasNextPage = !isPlaceholderData && items?.data.length === PER_PAGE;
+  const hasNextPage = !isPlaceholderData && items && page < items.meta.pagination.pageCount;
   const hasPreviousPage = page > 1;
 
   useEffect(() => {

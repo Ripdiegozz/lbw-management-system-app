@@ -53,6 +53,30 @@ export const columns: ColumnDef<BookPublic>[] = [
     }
   },
   {
+    accessorKey: 'collection.nombre',
+    meta: 'Colección',
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          Colección
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    }
+  },
+  {
+    accessorKey: 'tipo.nombre',
+    meta: 'Tipo',
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+          Tipo
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    }
+  },
+  {
     header: 'Actualizado el',
     meta: 'Actualizado el',
     accessorKey: 'updatedAt',

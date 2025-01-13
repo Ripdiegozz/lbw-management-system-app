@@ -12,6 +12,15 @@ export type HTTPValidationError = {
   detail?: Array<ValidationError>;
 };
 
+export type ResponseMetadata = {
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  };
+};
+
 // Books
 
 export type BookCreate = {
@@ -22,6 +31,7 @@ export type BookCreate = {
   publisher: string;
   slug: string;
   collection: string;
+  tipo: string;
 };
 
 export type BookPublic = {
@@ -30,6 +40,7 @@ export type BookPublic = {
   titulo: string;
   fecha_de_publicacion: string;
   ejemplares: number;
+  tipo: string;
   createdAt: string;
   updatedAt: string;
   slug: string;
@@ -42,6 +53,7 @@ export type BookPublicWithRelations = {
   titulo: string;
   fecha_de_publicacion: string;
   ejemplares: number;
+  tipo: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -56,6 +68,7 @@ export type BookUpdate = {
   author?: string;
   fecha_de_publicacion?: string;
   ejemplares?: number;
+  tipo?: string;
   publisher?: string;
   slug: string;
   collection?: string;
@@ -63,7 +76,27 @@ export type BookUpdate = {
 
 export type BooksPublic = {
   data: Array<BookPublicWithRelations>;
-  count: number;
+  meta: ResponseMetadata;
+};
+
+// BookTypes
+
+export type BookTypeCreate = {
+  nombre: string;
+};
+
+export type BookTypePublic = {
+  id: number;
+  documentId: string;
+  nombre: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+};
+
+export type BookTypesPublic = {
+  data: Array<BookTypePublic>;
+  meta: ResponseMetadata;
 };
 
 // Authors
@@ -90,7 +123,7 @@ export type AuthorUpdate = {
 
 export type AuthorsPublic = {
   data: Array<AuthorPublic>;
-  count: number;
+  meta: ResponseMetadata;
 };
 
 // Publishers
@@ -117,7 +150,7 @@ export type PublisherUpdate = {
 
 export type PublishersPublic = {
   data: Array<PublisherPublic>;
-  count: number;
+  meta: ResponseMetadata;
 };
 
 // Collections
@@ -143,7 +176,7 @@ export type CollectionUpdate = {
 
 export type CollectionsPublic = {
   data: Array<CollectionPublic>;
-  count: number;
+  meta: ResponseMetadata;
 };
 
 // Users
@@ -183,7 +216,7 @@ export type UserPublic = {
 
 export type UsersPublic = {
   data: Array<UserPublic>;
-  count: number;
+  meta: ResponseMetadata;
 };
 
 export type ValidationError = {

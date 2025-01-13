@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useModal } from '@/hooks/use-modal';
@@ -19,18 +19,20 @@ export function CreatePublisherModal() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const isModalOpen = isOpen && type === 'create-publisher';
-  const form = useForm({
+  const form = useForm<PublisherCreate>({
     resolver: zodResolver(publisherSchema),
     mode: 'onBlur',
     criteriaMode: 'all',
     defaultValues: {
       nombre: '',
-      locale: 'es'
+      slug: ''
     }
   });
 
   const mutation = useMutation({
-    mutationFn: (data: PublisherCreate) => PublisherService.createPublisher({ requestBody: data }),
+    mutationFn: (data: PublisherCreate) => {
+      return PublisherService.createPublisher({ requestBody: data });
+    },
     onSuccess: () => {
       toast({
         title: 'Éxito',
@@ -48,6 +50,11 @@ export function CreatePublisherModal() {
       queryClient.invalidateQueries({ queryKey: ['publishers'] });
     }
   });
+
+  useEffect(() => {
+    const generatedSlug = form.watch('nombre') ? form.watch('nombre').toLowerCase().replace(/ /g, '-') : '';
+    form.setValue('slug', generatedSlug);
+  }, [form.watch('nombre')]);
 
   async function onSubmit(data: PublisherCreate) {
     setIsLoading(true);
@@ -82,6 +89,26 @@ export function CreatePublisherModal() {
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Ingresa el nombre del autor" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Slug <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        readOnly
+                        className="bg-gray-100 text-gray-500 pointer-events-none cursor-not-allowed"
+                        {...field}
+                        value={form.watch('nombre') ? form.watch('nombre').toLowerCase().replace(/ /g, '-') : ''}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

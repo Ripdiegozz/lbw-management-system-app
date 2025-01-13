@@ -1,7 +1,7 @@
 import { CancelablePromise } from '../models/CancelablePromise';
 import { OpenAPI } from '../models/OpenAPI';
 import { request as __request } from '../models/request';
-import type { Message, BookCreate, BookPublic, BooksPublic, BookUpdate } from '../models';
+import type { Message, BookCreate, BookPublic, BooksPublic, BookUpdate, BookTypesPublic } from '../models';
 
 export type TDataReadBooks = {
   limit?: number;
@@ -76,7 +76,7 @@ export class BooksService {
     const { id } = data;
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/v1/books/{id}',
+      url: '/api/books/{id}',
       path: {
         id
       },
@@ -96,7 +96,7 @@ export class BooksService {
     const { id, requestBody } = data;
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/api/v1/books/{id}',
+      url: '/api/books/{id}',
       path: {
         id
       },
@@ -118,7 +118,7 @@ export class BooksService {
     const { id } = data;
     return __request(OpenAPI, {
       method: 'DELETE',
-      url: '/api/v1/books/{id}',
+      url: '/api/books/{id}',
       path: {
         id
       },
@@ -128,15 +128,10 @@ export class BooksService {
     });
   }
 
-  public static readXlsx(data: { file: File }): CancelablePromise<Message> {
-    const { file } = data;
-    const formData = new FormData();
-    formData.append('file', file);
-
+  public static readBookTypes(): CancelablePromise<BookTypesPublic> {
     return __request(OpenAPI, {
-      method: 'POST',
-      url: '/api/books/import',
-      body: formData,
+      method: 'GET',
+      url: '/api/book-types',
       errors: {
         422: `Validation Error`
       }

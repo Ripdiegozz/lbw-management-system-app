@@ -7,4 +7,5 @@ export const bookSchema = z.object({
   fecha_de_publicacion: z.string().nonempty('La fecha de publicación es requerida'),
   publisher: z.string().nonempty('La editorial es requerida'),
   collection: z.string().nonempty('La colección es requerida'),
+  tipo: z.string().nonempty('El tipo es requerido')
 });

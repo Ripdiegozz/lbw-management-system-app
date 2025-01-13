@@ -35,6 +35,12 @@ function getCollectionsQueryOptions() {
     queryKey: ['collections']
   };
 }
+function getBookTypesQueryOptions() {
+  return {
+    queryFn: () => BooksService.readBookTypes(),
+    queryKey: ['book-types']
+  };
+}
 
 export function AddBookForm() {
   const { toast } = useToast();
@@ -52,7 +58,8 @@ export function AddBookForm() {
       ejemplares: 1,
       fecha_de_publicacion: new Date().getFullYear().toString(),
       publisher: '',
-      collection: ''
+      collection: '',
+      tipo: ''
     }
   });
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,9 +90,16 @@ export function AddBookForm() {
     ...getPublishersQueryOptions(),
     placeholderData: prevData => prevData
   });
+  const { data: bookTypes, isFetching: isFetchingBookTypes } = useQuery({
+    ...getBookTypesQueryOptions(),
+    placeholderData: prevData => prevData
+  });
 
   const mutation = useMutation({
-    mutationFn: (data: BookCreate) => BooksService.createBook({ requestBody: data }),
+    mutationFn: (data: BookCreate) => {
+      data.slug = data.titulo.toLowerCase().replace(/ /g, '-');
+      return BooksService.createBook({ requestBody: data });
+    },
     onSuccess: () => {
       toast({
         title: 'Éxito',
@@ -277,6 +291,38 @@ export function AddBookForm() {
                     publishers?.data.map(publisher => (
                       <SelectItem key={publisher.documentId} value={publisher.id.toString()}>
                         {publisher.nombre}
+                      </SelectItem>
+                    ))
+                  )}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tipo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Tipo <span className="text-red-500">*</span>
+              </FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona un tipo" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {isFetchingBookTypes ? (
+                    <SelectItem value="loading" className="font-bold text-center">
+                      Cargando tipos...
+                    </SelectItem>
+                  ) : (
+                    bookTypes?.data.map(type => (
+                      <SelectItem key={type.documentId} value={type.id.toString()}>
+                        {type.nombre}
                       </SelectItem>
                     ))
                   )}

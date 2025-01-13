@@ -37,10 +37,10 @@
       "relation": "oneToOne",
       "target": "api::collection.collection"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "titulo",
-      "required": true
+    "tipo": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::book-type.book-type"
     }
   }
 }

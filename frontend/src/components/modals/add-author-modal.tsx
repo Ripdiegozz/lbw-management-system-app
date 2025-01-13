@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useModal } from '@/hooks/use-modal';
@@ -25,12 +25,19 @@ export function CreateAuthorModal() {
     criteriaMode: 'all',
     defaultValues: {
       nombre: '',
-      locale: 'es'
+      slug: ''
     }
   });
 
+  useEffect(() => {
+    const generatedSlug = form.watch('nombre') ? form.watch('nombre').toLowerCase().replace(/ /g, '-') : '';
+    form.setValue('slug', generatedSlug);
+  }, [form.watch('nombre')]);
+
   const mutation = useMutation({
-    mutationFn: (data: AuthorCreate) => AuthorService.createAuthor({ requestBody: data }),
+    mutationFn: (data: AuthorCreate) => {
+      return AuthorService.createAuthor({ requestBody: data });
+    },
     onSuccess: () => {
       toast({
         title: 'Éxito',
@@ -82,6 +89,22 @@ export function CreateAuthorModal() {
                     </FormLabel>
                     <FormControl>
                       <Input placeholder="Ingresa el nombre del autor" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="slug"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>
+                      Slug <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input disabled value={form.watch('nombre') ? form.watch('nombre').toLowerCase().replace(/ /g, '-') : ''} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

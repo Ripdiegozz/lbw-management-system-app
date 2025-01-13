@@ -94,7 +94,7 @@ export class AuthorService {
     const { id, requestBody } = data;
     return __request(OpenAPI, {
       method: 'PUT',
-      url: '/api/books/{id}',
+      url: '/api/authors/{id}',
       path: {
         id
       },
