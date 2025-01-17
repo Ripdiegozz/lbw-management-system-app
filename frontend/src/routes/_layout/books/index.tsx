@@ -23,7 +23,7 @@ const PER_PAGE = 10;
 
 function getBooksQueryOptions({ page }: { page: number }) {
   return {
-    queryFn: () => BooksService.readBooks({ skip: (page - 1) * PER_PAGE, limit: PER_PAGE }),
+    queryFn: () => BooksService.readBooks({ page: page, limit: PER_PAGE, query: '' }),
     queryKey: ['books', { page }]
   };
 }
@@ -32,7 +32,7 @@ function BooksComponent() {
   const queryClient = useQueryClient();
   const { page } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
-  const setPage = (page: number) => navigate({ search: prev => ({ ...prev, page }) });
+  const setPage = (page: number) => navigate({ search: () => ({ page }) });
 
   const {
     data: items,

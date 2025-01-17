@@ -6,6 +6,8 @@ import type { Message, BookCreate, BookPublic, BooksPublic, BookUpdate, BookType
 export type TDataReadBooks = {
   limit?: number;
   skip?: number;
+  page?: number;
+  query?: string;
 };
 export type TDataCreateBook = {
   requestBody: BookCreate;
@@ -29,13 +31,14 @@ export class BooksService {
    * @throws ApiError
    */
   public static readBooks(data: TDataReadBooks = {}): CancelablePromise<BooksPublic> {
-    const { limit = 100, skip = 0 } = data;
+    const { page = 1, limit = 10, query = ''} = data;
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/books/',
       query: {
-        skip,
-        limit,
+        'pagination[page]' : page,
+        'pagination[pageSize]' : limit,
+        'filters[titulo][$contains]': query,
         populate: '*'
       },
       errors: {
